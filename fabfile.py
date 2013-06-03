@@ -11,17 +11,39 @@ env.repo_name = "colorado"
 env.project_name = "colorado"
 
 # paths
-env.base = os.path.abspath(os.path.dirname(__file__)) # where this fabfile lives
+env.base = os.path.realpath(os.path.dirname(__file__)) # where this fabfile lives
 env.project_root = os.path.join(env.base, env.project_name) # settings dir
 env.ve = os.path.dirname(env.base) # one above base
+
+# executables
+env.python = os.path.join(env.ve, 'bin', 'python')
+env.manage = "%(python)s %(base)s/manage.py" % env
 
 def rm_pyc():
     "Clear all .pyc files that might be lingering"
     local("find . -name '*.pyc' -print0|xargs -0 rm", capture=False)
 
-def drop_database(cmd=local):
+def drop_database():
+    "Drop database. Don't do this by accident."
     with settings(warn_only=True):
-        cmd('dropdb %(db_name)s' % env)
+        local('dropdb %(db_name)s' % env)
 
-def create_database(cmd=local):
-    cmd('createdb -T template_postgis %(db_name)s' % env)
+def create_database():
+    "Create our local database."
+    local('createdb -T template_postgis %(db_name)s' % env)
+
+def reset():
+    "Drop and recreate the local database."
+    rm_pyc()
+    drop_database()
+    create_database()
+
+    manage('syncdb --noinput')
+    manage('migrate')
+
+def manage(cmd):
+    """
+    Run a Django management command in this VE.
+    Really only useful in other fab commands.
+    """
+    local('%s %s' % (env.manage, cmd))
