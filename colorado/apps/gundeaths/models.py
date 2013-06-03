@@ -73,11 +73,19 @@ class Person(TimeStampedModel):
     middle = models.CharField('Middle name', max_length=100, blank=True)
     last = models.CharField('Last name', max_length=100)
     suffix = models.CharField('Suffix', max_length=10, blank=True)
+    alias = models.CharField(max_length=255, blank=True)
+
+    display_name = models.CharField(max_length=300, blank=True,
+        help_text='Optional: Override other name fields and display this instead.')
 
     slug = models.SlugField(unique=True)
 
     # metadata
+    dob = models.DateField('Date of Birth', blank=True, null=True)
+    dod = models.DateField('Date of Death', blank=True, null=True)
     age = models.PositiveIntegerField(blank=True, null=True)
+    
+    race = models.ForeignKey('Race', blank=True, null=True)
     gender = models.CharField(max_length=6, blank=True, choices=GENDERS)
 
     bio = models.TextField(blank=True)
@@ -134,6 +142,18 @@ class Person(TimeStampedModel):
 # Concrete models 
 ##################
 
+class Method(CategoryBase):
+    """
+    A way to be killed by a gun: Homicide, Suicide, Accidental, Officer-involved
+    """
+
+
+class Race(CategoryBase):
+    """
+    Race, sort of as Census defines it.
+    """
+
+
 class Incident(TimeStampedModel):
     """
     A single incident, with one or more victims.
@@ -166,6 +186,31 @@ class Incident(TimeStampedModel):
         else:
             return self.point
 
+
+class Victim(Person):
+    """
+    A victim, who is dead
+    """
+    PLACES_OF_DEATH = Choices(
+        ('scene', 'At the scene'),
+        ('hospital', 'Hospital'),
+    )
+
+    incident = models.ForeignKey(Incident, related_name='victims',
+        blank=True, null=True, on_delete=models.SET_NULL)
+
+    method = models.ForeignKey(Method, related_name='victims',
+        blank=True, null=True, on_delete=models.SET_NULL)
+    
+    place_of_death = models.CharField(max_length=10, 
+        choices=PLACES_OF_DEATH, blank=True)
+    
+    obit = models.URLField("Obituary", max_length=300, blank=True,
+        help_text="Link to this person's official obituary")
+
+    residence_address = models.CharField(max_length=255, blank=True)
+
+    # TODO Photos
 
 
 
