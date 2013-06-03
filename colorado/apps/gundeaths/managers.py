@@ -1,8 +1,8 @@
-from django.db.models.query import QuerySet
+from django.contrib.gis.db.models.query import GeoQuerySet
 from model_utils.managers import PassThroughManager
 from nameparser import HumanName
 
-class PersonQuerySet(QuerySet):
+class PersonQuerySet(GeoQuerySet):
 
     def public(self):
         return self.filter(public=True)
@@ -22,5 +22,13 @@ class PersonQuerySet(QuerySet):
         return super(PersonQuerySet, self).filter(*args, **kwargs)
 
 
-PersonManager = PassThroughManager.for_queryset_class(PersonQuerySet)
+class IncidentQuerySet(GeoQuerySet):
+    """
+    A queryset for incidents, which needs spatial stuff and publicness
+    """
+    def public(self):
+        return self.filter(public=True)
 
+
+PersonManager = PassThroughManager.for_queryset_class(PersonQuerySet)
+IncidentManager = PassThroughManager.for_queryset_class(IncidentQuerySet)

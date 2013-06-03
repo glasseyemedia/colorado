@@ -15,7 +15,7 @@ from model_utils import Choices
 from model_utils.models import TimeStampedModel
 from nameparser import HumanName
 
-from .managers import PersonManager
+from .managers import PersonManager, IncidentManager
 
 from geopy import geocoders
 
@@ -160,13 +160,21 @@ class Incident(TimeStampedModel):
     People will be attached to this model.
     """
     # TODO Date/Time fields
+    public = models.BooleanField(default=False)
+    datetime = models.DateTimeField()
 
     address = models.CharField("Street Address", max_length=255)
     city = models.CharField(max_length=255)
     state = USStateField(default=DEFAULT_STATE)
     point = models.PointField(blank=True, null=True)
 
+    description = models.TextField(blank=True)
+
     # TODO boundaries
+
+    class Meta:
+        get_latest_by = "datetime"
+        ordering = ('-datetime',)
 
     @property
     def location(self):
@@ -208,7 +216,7 @@ class Victim(Person):
     obit = models.URLField("Obituary", max_length=300, blank=True,
         help_text="Link to this person's official obituary")
 
-    residence_address = models.CharField(max_length=255, blank=True)
+    residence_address = models.CharField(max_length=300, blank=True)
 
     # TODO Photos
 
