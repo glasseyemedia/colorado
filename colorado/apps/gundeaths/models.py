@@ -194,6 +194,10 @@ class Incident(TimeStampedModel):
         else:
             return self.point
 
+    def save(self, *args, **kwargs):
+        self.point = self.geocode()
+        super(Incident, self).save(*args, **kwargs)
+
 
 class Victim(Person):
     """

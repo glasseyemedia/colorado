@@ -9,3 +9,4 @@ nameparser==0.2.7
 paramiko==1.10.1
 psycopg2==2.5
 pycrypto==2.6
+pytz==2013b

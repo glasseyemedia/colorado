@@ -1,5 +1,5 @@
-import datetime
 from django.test import TestCase
+from django.utils import timezone
 
 from colorado.apps.gundeaths.models import Incident, Victim
 
@@ -17,7 +17,7 @@ class IncidentTests(TestCase):
     def create_incidents(self):
         for address, city in self.places:
             incident = Incident.objects.create(
-                datetime=datetime.datetime.now(),
+                datetime=timezone.now(),
                 address=address,
                 city=city
             )
@@ -25,5 +25,13 @@ class IncidentTests(TestCase):
     def test_create_incidents(self):
         self.create_incidents()
         self.assertEqual(Incident.objects.count(), len(self.places))
+
+    def test_geocode(self):
+        self.create_incidents()
+
+        self.assertEqual(
+            Incident.objects.count(), 
+            Incident.objects.filter(point__isnull=False).count()
+        )
 
 
