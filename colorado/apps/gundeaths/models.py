@@ -1,4 +1,5 @@
 import datetime
+import logging
 
 from django.conf import settings
 from django.contrib.gis.db import models
@@ -20,6 +21,7 @@ from .managers import PersonManager, IncidentManager
 from geopy import geocoders
 
 g = geocoders.GoogleV3()
+log = logging.getLogger('colorado.apps.gundeaths')
 
 DEFAULT_STATE = getattr(settings, 'HW_DEFAULT_STATE', 'CO')
 DEFAULT_EMBED_HEIGHT = getattr(settings, 'HW_DEFAULT_EMBED_HEIGHT', 350)
@@ -188,9 +190,10 @@ class Incident(TimeStampedModel):
         if not self.point or reset:
             try:
                 place, (lat, lng) = list(g.geocode(self.location, exactly_one=False))[0]
+                log.debug('Geocode: %s (%f, %f)', place, lat, lng)
                 return Point(lng, lat)
             except Exception, e: # no results, should log this
-                pass
+                log.warning('Geocode failed for %s: %s', self.location, str(e))
         else:
             return self.point
 
