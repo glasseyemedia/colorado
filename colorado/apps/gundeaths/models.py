@@ -223,7 +223,7 @@ class Victim(Person):
     obit = models.URLField("Obituary", max_length=300, blank=True,
         help_text="Link to this person's official obituary")
 
-    residence_address = models.CharField(max_length=300, blank=True)
+    residence_address = models.TextField(blank=True)
 
     # TODO Photos
 

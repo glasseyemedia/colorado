@@ -1,7 +1,12 @@
+import csv
+import urllib2
+from cStringIO import StringIO
+
 from django.test import TestCase
 from django.utils import timezone
 
 from colorado.apps.gundeaths.models import Incident, Victim
+from colorado.apps.gundeaths.utils import load_victims
 
 class IncidentTests(TestCase):
     """
@@ -33,5 +38,34 @@ class IncidentTests(TestCase):
             Incident.objects.count(), 
             Incident.objects.filter(point__isnull=False).count()
         )
+
+
+class LoadingTest(TestCase):
+    """
+    Tests related to data loading.
+    """
+    def setUp(self):
+        self.url = "https://docs.google.com/spreadsheet/pub?key=0AprNP7zjIYS1dEhXRnRVTDRfRlRVcFdnVlhTcEk1N3c&single=true&gid=0&output=csv"
+
+    def test_load_victims(self):
+        """
+        Ensure that load_victims gets the right number of records.
+        """
+        data = urllib2.urlopen(self.url).read()
+        data = StringIO(data)
+
+        reader = csv.DictReader(data)
+        total = len(list(reader))
+
+        data.seek(0)
+        reader = csv.DictReader(data)
+
+        load_victims(data)
+
+        self.assertEqual(Victim.objects.count(), total)
+
+
+
+
 
 
