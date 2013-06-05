@@ -87,7 +87,6 @@ class Person(TimeStampedModel):
     dod = models.DateField('Date of Death', blank=True, null=True)
     age = models.PositiveIntegerField(blank=True, null=True)
     
-    race = models.ForeignKey('Race', blank=True, null=True)
     gender = models.CharField(max_length=6, blank=True, choices=GENDERS)
 
     bio = models.TextField(blank=True)
@@ -178,6 +177,9 @@ class Incident(TimeStampedModel):
         get_latest_by = "datetime"
         ordering = ('-datetime',)
 
+    def __unicode__(self):
+        return u"%s %s" % (self.datetime, self.location)
+
     @property
     def location(self):
         if self.address:
@@ -216,6 +218,10 @@ class Victim(Person):
 
     method = models.ForeignKey(Method, related_name='victims',
         blank=True, null=True, on_delete=models.SET_NULL)
+
+    race = models.ForeignKey('Race', related_name='victims',
+        blank=True, null=True,
+        on_delete=models.SET_NULL)
     
     place_of_death = models.CharField(max_length=10, 
         choices=PLACES_OF_DEATH, blank=True)
