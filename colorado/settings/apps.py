@@ -18,10 +18,12 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.gis',
 
-    # Uncomment the next line to enable the admin:
-    # 'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
+    # admin
+    'django.contrib.admin',
+    'django.contrib.admindocs',
+
+    # 3rd party
+    'south',
 
     # core
     'colorado.apps.gundeaths',

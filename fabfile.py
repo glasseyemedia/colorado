@@ -43,7 +43,10 @@ def reset():
     rm_pyc()
     drop_database()
     create_database()
+    migrate()
 
+def migrate():
+    "Run manage.py syncdb and manage.py migrate"
     manage('syncdb --noinput')
     manage('migrate')
 
