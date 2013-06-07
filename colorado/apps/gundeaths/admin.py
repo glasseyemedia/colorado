@@ -9,6 +9,12 @@ def make_public(modeladmin, request, queryset):
     queryset.update(public=True)
 make_public.short_description = "Mark selected items as public"
 
+class VictimInline(admin.StackedInline):
+    # classes = ('collapse open',)
+    extra = 1
+    prepopulated_fields = {'slug': Victim.NAME_FIELDS }
+    model = Victim
+
 
 class SimpleAdmin(admin.ModelAdmin):
     
@@ -29,6 +35,8 @@ class SimpleAdmin(admin.ModelAdmin):
 
 class IncidentAdmin(admin.OSMGeoAdmin):
     actions = [make_public]
+    inlines = [VictimInline]
+    
     date_hierarchy = "datetime"
     list_display = ('datetime', 'address', 'city', 'victim_links', 'public')
     list_filter = ('public', 'city')
