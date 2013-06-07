@@ -38,4 +38,7 @@ nosetests.xml
 # django
 *.db
 *.sqlite
+
 colorado/settings/local.py
+colorado/static
+colorado/uploads
