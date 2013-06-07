@@ -23,6 +23,10 @@ from geopy import geocoders
 g = geocoders.GoogleV3()
 log = logging.getLogger('colorado.apps.gundeaths')
 
+# constants
+DATE_FORMAT = "%b %d, %Y"
+DATETIME_FORMAT = "%b %d, %Y %H:%M"
+
 DEFAULT_STATE = getattr(settings, 'HW_DEFAULT_STATE', 'CO')
 DEFAULT_EMBED_HEIGHT = getattr(settings, 'HW_DEFAULT_EMBED_HEIGHT', 350)
 
@@ -173,12 +177,17 @@ class Incident(TimeStampedModel):
 
     # TODO boundaries
 
+    objects = IncidentManager()
+
     class Meta:
         get_latest_by = "datetime"
         ordering = ('-datetime',)
 
     def __unicode__(self):
-        return u"%s %s" % (self.datetime, self.location)
+        if self.address:
+            return u"%s %s" % (self.datetime.strftime(DATE_FORMAT), self.location)
+        else:
+            return u"%s %s" % (self.datetime.strftime(DATE_FORMAT), self.city)
 
     @property
     def location(self):

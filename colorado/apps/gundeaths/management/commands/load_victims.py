@@ -1,11 +1,17 @@
 import os
 import urllib2
+from optparse import make_option
 from django.core.management.base import LabelCommand
 
 from colorado.apps.gundeaths.models import Method, Race, Incident, Victim
 from colorado.apps.gundeaths.utils import load_victims
 
 class Command(LabelCommand):
+
+    option_list = LabelCommand.option_list + (
+        make_option('-p', '--public', dest='public', action='store_true',
+            default=False, help="Make incidents and victims public"),
+    )
 
     def handle_label(self, label, **options):
         """
