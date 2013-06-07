@@ -91,7 +91,7 @@ def load_victims(file, public=False):
         gender = row['Gender'].strip().lower()
         gender = GENDERS.get(gender)
 
-        residence_address = "%s, %s" % (row['Home Address'], row['Home City'])
+        residence_address = ", ".join((row['Home Address'], row['Home City']))
 
         incident, created = Incident.objects.get_or_create(
             datetime=safe_date(row['Incident date']),
@@ -112,6 +112,8 @@ def load_victims(file, public=False):
                 'race'  : race,
                 'method': method,
                 'age'   : safe_type(int, row['Age']),
+                'dob'   : safe_date(row['DOB']),
+                'dod'   : safe_date(row['Date of death']),
                 'residence_address': residence_address,
                 'obit'  : row['Obituary'],
                 'public': public
