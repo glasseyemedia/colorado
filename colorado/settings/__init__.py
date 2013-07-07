@@ -1,5 +1,6 @@
 from .base import *
 from .apps import *
+from .assets import *
 from .logging import *
 
 try:

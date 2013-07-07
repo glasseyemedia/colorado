@@ -24,7 +24,12 @@ INSTALLED_APPS = (
 
     # 3rd party
     'south',
+    'pipeline',
 
     # core
     'colorado.apps.gundeaths',
 )
+
+# staticfiles
+# asset config is in assets.py
+STATICFILES_STORAGE = "pipeline.storage.PipelineCachedStorage"
