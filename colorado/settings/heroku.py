@@ -1,4 +1,4 @@
-from hwdc.settings import *
+from colorado.settings import *
 
 DEBUG = True
 
