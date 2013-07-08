@@ -6,18 +6,11 @@ Views for victims:
  - an incident detail, with profiles
 """
 
-from django.views.generic import ListView
+from django.views.generic import DetailView, ListView
 from coffin.shortcuts import render
-from .models import Victim
+from .models import Incident, Victim
 
-
-class VictimList(ListView):
-    """
-    A generic list of victims.
-    Using a class-based view here so it's easier to
-    reuse with different templates.
-    """
-    queryset = Victim.objects.public()
+class JinjaMixin(object):
 
     def render_to_response(self, context, **response_kwargs):
         """
@@ -26,3 +19,18 @@ class VictimList(ListView):
         templates = self.get_template_names()
         return render(self.request, templates, context, **response_kwargs)
 
+
+class VictimList(JinjaMixin, ListView):
+    """
+    A generic list of victims.
+    Using a class-based view here so it's easier to
+    reuse with different templates.
+    """
+    queryset = Victim.objects.public().select_related('incident')
+
+
+class IncidentDetail(JinjaMixin, DetailView):
+    """
+    Detail view for a single incident, which may have multiple victims.
+    """
+    queryset = Incident.objects.public().prefetch_related('victims')

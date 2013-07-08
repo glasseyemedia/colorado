@@ -212,6 +212,10 @@ class Incident(TimeStampedModel):
         self.point = self.geocode()
         super(Incident, self).save(*args, **kwargs)
 
+    @models.permalink
+    def get_absolute_url(self):
+        return ('gundeaths_incident_detail', None, {'pk': self.pk})
+
 
 class Victim(Person):
     """
@@ -243,7 +247,7 @@ class Victim(Person):
     # TODO Photos
 
     def get_absolute_url(self):
-        pass
+        return self.incident.get_absolute_url()
 
 
 
