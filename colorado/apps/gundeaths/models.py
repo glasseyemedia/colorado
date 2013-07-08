@@ -16,7 +16,7 @@ from model_utils import Choices
 from model_utils.models import TimeStampedModel
 from nameparser import HumanName
 
-from .managers import PersonManager, IncidentManager
+from .managers import PersonManager, VictimManager, IncidentManager
 
 from geopy import geocoders
 
@@ -245,6 +245,8 @@ class Victim(Person):
     residence_address = models.TextField(blank=True)
 
     # TODO Photos
+
+    objects = VictimManager()
 
     def get_absolute_url(self):
         return self.incident.get_absolute_url()

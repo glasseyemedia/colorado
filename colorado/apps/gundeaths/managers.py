@@ -1,3 +1,4 @@
+from itertools import groupby
 from django.contrib.gis.db.models.query import GeoQuerySet
 from model_utils.managers import PassThroughManager
 from nameparser import HumanName
@@ -22,6 +23,15 @@ class PersonQuerySet(GeoQuerySet):
         return super(PersonQuerySet, self).filter(*args, **kwargs)
 
 
+class VictimQuerySet(PersonQuerySet):
+
+    def by_incident_date(self, format=None):
+        if format:
+            return groupby(self, lambda v: v.incident.datetime.strftime(format))
+        else:
+            return groupby(self, lambda v: v.incident.datetime)
+
+
 class IncidentQuerySet(GeoQuerySet):
     """
     A queryset for incidents, which needs spatial stuff and publicness
@@ -31,4 +41,5 @@ class IncidentQuerySet(GeoQuerySet):
 
 
 PersonManager = PassThroughManager.for_queryset_class(PersonQuerySet)
+VictimManager = PassThroughManager.for_queryset_class(VictimQuerySet)
 IncidentManager = PassThroughManager.for_queryset_class(IncidentQuerySet)

@@ -1,7 +1,48 @@
 {% extends "gundeaths/base.html" %}
 
+{% block css %}
+{{ super() }}
+
+<style type="text/css">
+.month {
+    border-top: 1px solid #ccc;
+}
+
+.victim,
+.separator {
+    margin-right: .5em;
+    line-height: 2em;
+}
+
+.separator { color: #ddd; }
+
+.victim-list {
+    margin-top: 10px;
+}
+
+</style>
+{% endblock css %}
+
 {% block content %}
-{% for victim in victim_list %}
-    <a href="{{ victim.incident.get_absolute_url() }}">{{ victim.name }}</a>
+<div id="memorial-wall">
+{% for month, victims in victim_list.by_incident_date('%B %Y') %}
+    <div class="row month">
+        <div class="span2">
+            <h3>{{ month }}</h3>
+        </div>
+        <div class="span10 victims">
+            <p class="victim-list">
+                {% for victim in victims|sort(attribute='last') %}
+            
+                <a href="{{ victim.incident.get_absolute_url() }}"
+                   class="victim"
+                   id="victim-{{ victim.id }}">{{ victim.name }}</a>
+                   <span class="separator">&diams;</span>
+                {% endfor %}
+
+            </p>
+        </div>
+    </div>
 {% endfor %}
+</div>
 {% endblock content %}

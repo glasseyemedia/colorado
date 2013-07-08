@@ -26,7 +26,9 @@ class VictimList(JinjaMixin, ListView):
     Using a class-based view here so it's easier to
     reuse with different templates.
     """
-    queryset = Victim.objects.public().select_related('incident')
+    queryset = Victim.objects.public(
+        ).order_by('-incident__datetime', 
+        ).select_related('incident')
 
 
 class IncidentDetail(JinjaMixin, DetailView):
