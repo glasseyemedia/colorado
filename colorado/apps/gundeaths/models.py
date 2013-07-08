@@ -242,6 +242,9 @@ class Victim(Person):
 
     # TODO Photos
 
+    def get_absolute_url(self):
+        pass
+
 
 
 

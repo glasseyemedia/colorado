@@ -6,21 +6,30 @@
 
     <title>{% block title %}Colorado Gun Deaths{% endblock title %}</title>
 
+    {% compressed_css 'bootstrap' %}
+
 </head>
 <body>
     {% block body %}
     <header class="container">
         {% block header %}
         <div class="row">
-            <h1>Colorado Gun Deaths</h1>
-            <h2>Engage. Inform. Remember.</h2>
+                <div class="span6">
+                    <h1>Colorado Gun Deaths</h1>
+                </div>
+                <div class="span6 pull-right text-right">
+                    <h2>Engage. Inform. Remember.</h2>
+                </div>
+            </div>
         </div>
         <nav class="row">
-            <ul class="nav">
-                <li><a href="#">Submissions and Comments Policy</a></li>
-                <li><a href="#">Resources</a></li>
-                <li><a href="#">About</a></li>
-            </ul>
+            <div class="span12">
+                <ul class="nav nav-pills">
+                    <li><a href="#">Submissions and Comments Policy</a></li>
+                    <li><a href="#">Resources</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </div>
         </nav>
         {% endblock header %}
     </header>
@@ -29,7 +38,13 @@
         {% endblock content %}
     </div>
     <footer class="container">
-        {% block footer %}{% endblock footer %}
+        {% block footer %}
+        <div class="row">
+            <div class="span12">
+                <p>Colorado Gun Deaths is a project of the University of Colorado Boulder</p>
+            </div>
+        </div>
+        {% endblock footer %}
     </footer>
     {% endblock body %}
 </body>

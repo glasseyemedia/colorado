@@ -1,1 +1,7 @@
 {% extends "gundeaths/base.html" %}
+
+{% block content %}
+{% for victim in victim_list %}
+    <a href="{{ victim.get_absolute_url() }}">{{ victim.name }}</a>
+{% endfor %}
+{% endblock content %}
