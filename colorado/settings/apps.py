@@ -23,6 +23,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
 
     # 3rd party
+    'coffin',
     'south',
     'pipeline',
 

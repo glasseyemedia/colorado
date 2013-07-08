@@ -1,3 +1,4 @@
+Coffin==0.3.8
 Django==1.5.1
 Fabric==1.6.1
 South==0.8.1

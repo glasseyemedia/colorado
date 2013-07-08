@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Colorado Gun Deaths{% endblock title %}</title>
+
+</head>
+<body>
+    {% block body %}
+    <header class="container">
+        {% block header %}
+        <div class="row">
+            <h1>Colorado Gun Deaths</h1>
+            <h2>Engage. Inform. Remember.</h2>
+        </div>
+        <nav class="row">
+            <ul class="nav">
+                <li><a href="#">Submissions and Comments Policy</a></li>
+                <li><a href="#">Resources</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </nav>
+        {% endblock header %}
+    </header>
+    <div class="container">
+        {% block content %}
+        {% endblock content %}
+    </div>
+    <footer class="container">
+        {% block footer %}{% endblock footer %}
+    </footer>
+    {% endblock body %}
+</body>
+</html>

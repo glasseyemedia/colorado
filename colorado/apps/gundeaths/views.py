@@ -7,7 +7,7 @@ Views for victims:
 """
 
 from django.views.generic import ListView
-
+from coffin.shortcuts import render
 from .models import Victim
 
 
@@ -18,3 +18,11 @@ class VictimList(ListView):
     reuse with different templates.
     """
     queryset = Victim.objects.public()
+
+    def render_to_response(self, context, **response_kwargs):
+        """
+        Overriding to use jinja2 templates
+        """
+        templates = self.get_template_names()
+        return render(self.request, templates, context, **response_kwargs)
+
