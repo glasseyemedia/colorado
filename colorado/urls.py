@@ -22,6 +22,8 @@ urlpatterns = patterns('',
 
     # core
     url(r'^victims/', include('colorado.apps.gundeaths.urls')),
+
+    url(r'^', include('colorado.apps.news.urls')),
 )
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

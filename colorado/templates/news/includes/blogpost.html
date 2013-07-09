@@ -1,0 +1,12 @@
+{# an individual post, either in a list or by itself #}
+<article id="post-{{ post.ID }}">
+	<header>
+		<h2><a href="{{ post.url }}">{{ post.title|safe }}</a></h2>
+	</header>
+	<div class="byline">
+		<p>Posted {{ post.date|parsedate('F j, Y, P') }} by {{ post.author.name }}</p>
+	</div>
+	<div class="post-content">
+		{{ post.content|safe }}
+	</div>
+</article>

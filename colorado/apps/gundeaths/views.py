@@ -7,17 +7,9 @@ Views for victims:
 """
 
 from django.views.generic import DetailView, ListView
-from coffin.shortcuts import render
+
+from colorado.lib.views import JinjaMixin
 from .models import Incident, Victim
-
-class JinjaMixin(object):
-
-    def render_to_response(self, context, **response_kwargs):
-        """
-        Overriding to use jinja2 templates
-        """
-        templates = self.get_template_names()
-        return render(self.request, templates, context, **response_kwargs)
 
 
 class VictimList(JinjaMixin, ListView):

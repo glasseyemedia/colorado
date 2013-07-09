@@ -30,6 +30,7 @@ INSTALLED_APPS = (
 
     # core
     'colorado.apps.gundeaths',
+    'colorado.apps.news',
 )
 
 # templates
@@ -40,3 +41,6 @@ JINJA2_EXTENSIONS = (
 # staticfiles
 # asset config is in assets.py
 STATICFILES_STORAGE = "pipeline.storage.PipelineCachedStorage"
+
+WORDPRESS_SITE_SLUG = "coloradogundeaths.com"
+WORDPRESS_POSTS_PER_PAGE = 10
