@@ -21,7 +21,7 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
 
     # core
-    url(r'^victims/', include('colorado.apps.gundeaths.urls')),
+    url(r'^', include('colorado.apps.gundeaths.urls')),
 
     url(r'^', include('colorado.apps.news.urls')),
 )
