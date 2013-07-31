@@ -1,3 +1,5 @@
+from getenv import env
+
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -35,6 +37,14 @@ INSTALLED_APPS = (
     'colorado.apps.gundeaths',
     'colorado.apps.news',
 )
+
+# aws
+AWS_ACCESS_KEY_ID = env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_SECURE_URLS = False
+AWS_QUERYSTRING_AUTH = False
+
 
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
