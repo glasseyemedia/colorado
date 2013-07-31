@@ -2,12 +2,13 @@
 Settings related to assets, which are managed via Pipeline.
 """
 PIPELINE_CSS = {
-    'bootstrap': {
+    'site': {
         'source_filenames': (
-            'bootstrap/css/bootstrap.css',
+            #'bootstrap/css/bootstrap.css',
+            'css/journal.css',
             'bootstrap/css/bootstrap-responsive.css',
         ),
-        'output_filename': 'css/bootstrap.css'
+        'output_filename': 'css/site.css'
     },
 }
 
