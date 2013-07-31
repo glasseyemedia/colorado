@@ -26,10 +26,20 @@ class PersonQuerySet(GeoQuerySet):
 class VictimQuerySet(PersonQuerySet):
 
     def by_incident_date(self, format=None):
+        """
+        Group by incident date. 
+        Pass in a format to create larger groups (months, for example).
+        """
         if format:
             return groupby(self, lambda v: v.incident.datetime.strftime(format))
         else:
             return groupby(self, lambda v: v.incident.datetime)
+
+    def by_incident(self):
+        """
+        Group by incident ID.
+        """
+        return groupby(self, lambda v: v.incident_id)
 
 
 class IncidentQuerySet(GeoQuerySet):

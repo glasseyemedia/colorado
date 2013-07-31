@@ -8,8 +8,17 @@ PIPELINE_CSS = {
             'bootstrap/css/journal.css',
             'bootstrap/css/bootstrap-responsive.css',
         ),
+        
         'output_filename': 'css/site.css'
     },
+
+    'leaflet': {
+        'source_filenames': (
+            'components/leaflet.markerclusterer/dist/MarkerCluster.css',
+        ),
+
+        'output_filename': 'css/leaflet.css'
+    }
 }
 
 PIPELINE_JS = {

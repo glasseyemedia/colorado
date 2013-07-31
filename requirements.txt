@@ -15,7 +15,7 @@ django-localflavor-us==1.1
 django-model-utils==1.3.1
 django-pipeline==1.3.12
 django-storages==1.1.8
-django-tastypie==0.9.9
+django-tastypie==0.9.15
 docutils==0.10
 futures==2.1.4
 geopy==0.95.1
@@ -30,9 +30,10 @@ paramiko==1.10.1
 ply==3.4
 psycopg2==2.5
 pycrypto==2.6
-python-dateutil==1.5
+python-dateutil==2.1
 python-digest==1.7
 python-wordpress==0.1.3
 pytz==2013b
 requests==1.2.3
+six==1.3.0
 slimit==0.8.1
