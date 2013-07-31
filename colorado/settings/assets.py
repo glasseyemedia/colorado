@@ -15,6 +15,7 @@ PIPELINE_CSS = {
     'leaflet': {
         'source_filenames': (
             'components/leaflet.markerclusterer/dist/MarkerCluster.css',
+            'components/leaflet.markerclusterer/dist/MarkerCluster.Default.css',
         ),
 
         'output_filename': 'css/leaflet.css'
@@ -25,6 +26,7 @@ PIPELINE_JS = {
     'leaflet': {
         'source_filenames': (
             'components/leaflet.markerclusterer/dist/leaflet.markercluster.js',
+            'components/underscore/underscore.js',
         ),
 
         'output_filename': 'js/leaflet-plugins.js'

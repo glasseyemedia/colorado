@@ -19,15 +19,29 @@
 
 {% block js %}
 {{ super() }}
+<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <script src='//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.js'></script>
-<script src="/static/components/leaflet.markerclusterer/dist/leaflet.markercluster.js"></script>
+{% compressed_js 'leaflet' %}
+
 <script type="text/javascript">
-var incidents = {{ incident_list|geojsonfeature(geometry_field='point', properties=['datetime', 'address', 'city', 'location'])|safe }};
-
 var map = L.mapbox.map('map', 'chrisamico.map-10h9gysj')
-  , points = L.geoJson(incidents).addTo(map);
+  , markers = new L.MarkerClusterGroup({
+	  	showCoverageOnHover: false,
+	  	maxClusterRadius: 30
+  }).addTo(map);
 
-map.fitBounds(points.getBounds());
+$.getJSON("{% url 'api_dispatch_list' 'v1', 'incident' %}", function(incidents) {
+	window.incidents = incidents;
+	_.each(incidents.objects, function(incident) {
+		var p = incident.point.coordinates;
+		
+		var marker = L.marker([p[1], p[0]])
+		    .addTo(markers)
+		    .bindPopup(incident.location);
+	});
+
+	map.fitBounds(markers.getBounds());
+});
 </script>
 
 {% endblock js %}
