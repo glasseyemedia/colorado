@@ -19,6 +19,7 @@ geopy==0.95.1
 gevent==0.13.8
 greenlet==0.4.0
 gunicorn==0.17.4
+httplib2==0.8
 mimeparse==0.1.3
 nameparser==0.2.7
 paramiko==1.10.1
@@ -26,5 +27,6 @@ psycopg2==2.5
 pycrypto==2.6
 python-dateutil==1.5
 python-digest==1.7
+-e git+git@github.com:eyeseast/python-wordpress.git@939d09109f4c0797a44845e02e2aa495c6d62d50#egg=python_wordpress-dev
 pytz==2013b
 requests==1.2.3

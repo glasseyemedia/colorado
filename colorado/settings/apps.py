@@ -5,6 +5,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'pipeline.middleware.MinifyHTMLMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -27,11 +28,16 @@ INSTALLED_APPS = (
     'coffin',
     'south',
     'pipeline',
+    'debug_toolbar',
 
     # core
     'colorado.apps.gundeaths',
     'colorado.apps.news',
 )
+
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+}
 
 # templates
 JINJA2_EXTENSIONS = (
@@ -42,5 +48,6 @@ JINJA2_EXTENSIONS = (
 # asset config is in assets.py
 STATICFILES_STORAGE = "pipeline.storage.PipelineCachedStorage"
 
-WORDPRESS_SITE_SLUG = "coloradogundeaths.com"
-WORDPRESS_POSTS_PER_PAGE = 10
+WORDPRESS_BLOG_URL = "http://coloradogundeaths.com"
+
+

@@ -3,9 +3,11 @@
 {% block content %}
 <div class="row">
 	<div id="posts" class="span7">
+		{% block posts %}
 		{% for post in posts %}
 		{% include "news/includes/blogpost.html" %}
 		{% endfor %}
+		{% endblock posts %}
 	</div>
 
 	<div id="sidebar" class="span5">

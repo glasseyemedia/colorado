@@ -6,16 +6,31 @@ News views:
 """
 from coffin.shortcuts import render
 from django.conf import settings
+from django.http import Http404
 
-from .wordpress import WordPress
+from wordpress import WordPress, WordPressError
 
-PER_PAGE = getattr(settings, 'WORDPRESS_POSTS_PER_PAGE', 10)
+wp = WordPress(settings.WORDPRESS_BLOG_URL)
 
-wp = WordPress(settings.WORDPRESS_SITE_SLUG)
 
-def blog_index(request, page=1):
-	"""
-	Get latest posts, or a page or posts.
-	"""
-	posts = wp.posts(page=page, number=PER_PAGE)
-	return render(request, 'news/blog_index.html', posts)
+def wp_proxy(request, **kwargs):
+    """
+    Proxy request to WordPress.
+    """
+    try:
+        resp = wp.proxy(request.path)
+    
+    except WordPressError, e:
+        if 'Not found' in e.args:
+            raise Http404
+        else:
+            raise
+
+    # get a template name, using an index by default
+    template = kwargs.pop('template', 'news/blog_index.html')
+
+    # pass any remaining kwargs into context
+    resp.update(kwargs)
+
+    # send everything along
+    return render(request, template, resp)
