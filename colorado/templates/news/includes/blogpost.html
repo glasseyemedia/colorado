@@ -1,5 +1,8 @@
 {# an individual post, either in a list or by itself #}
-<article id="post-{{ post.ID }}">
+{% if page is defined %}
+{% set post = page %}
+{% endif %}
+<article id="post-{{ post.id }}">
 	<header>
 		{% if single %}
 		<h2>{{ post.title|safe }}</h2>
@@ -7,9 +10,11 @@
 		<h2><a href="{{ post.url|replace(WORDPRESS_BLOG_URL, '') }}">{{ post.title|safe }}</a></h2>
 		{% endif %}
 	</header>
+	{% if page is not defined %}
 	<div class="byline">
 		<p>Posted {{ post.date|parsedate('F j, Y, P') }} by {{ post.author.name }}</p>
 	</div>
+	{% endif %}
 	<div class="post-content">
 		{{ post.content|safe }}
 	</div>

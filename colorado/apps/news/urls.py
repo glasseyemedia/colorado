@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     # here for url convenience
     url(r'^(?P<slug>[-\w]+)/$',
     	wp_proxy,
+    	{'single': True, 'template': 'news/page.html'},
     	name='blog_page'),
 
     # catch anything else that falls through

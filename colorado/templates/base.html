@@ -16,7 +16,7 @@
         {% block header %}
         <div class="row">
                 <div class="span6">
-                    <h1>Colorado Gun Deaths</h1>
+                    <h1><a href="{% url blog_index %}">Colorado Gun Deaths</a></h1>
                 </div>
                 <div class="span6 pull-right text-right">
                     <h2>Engage. Inform. Remember.</h2>
@@ -26,9 +26,10 @@
         <nav class="row">
             <div class="span12">
                 <ul class="nav nav-pills">
-                    <li><a href="#">Submissions and Comments Policy</a></li>
-                    <li><a href="#">Resources</a></li>
-                    <li><a href="#">About</a></li>
+                    {% set pages = wp_pages() %}
+                    {% for page in pages %}
+                    <li><a href="{% url blog_page page.slug %}">{{ page.title }}</a></li>
+                    {% endfor %}
                 </ul>
             </div>
         </nav>

@@ -6,11 +6,12 @@ News views:
 """
 from coffin.shortcuts import render
 from django.conf import settings
+from django.core.cache import cache
 from django.http import Http404
 
 from wordpress import WordPress, WordPressError
 
-wp = WordPress(settings.WORDPRESS_BLOG_URL)
+wp = WordPress(settings.WORDPRESS_BLOG_URL, cache)
 
 
 def wp_proxy(request, **kwargs):
