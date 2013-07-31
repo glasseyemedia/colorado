@@ -251,6 +251,12 @@ class Victim(Person):
     def get_absolute_url(self):
         return self.incident.get_absolute_url()
 
+    def get_display_name(self):
+        """
+        Get display_name or name, whichever exists.
+        """
+        return self.display_name or self.name
+
 
 
 

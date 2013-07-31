@@ -32,6 +32,7 @@ INSTALLED_APPS = (
     'djgeojson',
     'pipeline',
     'south',
+    'tastypie',
 
     # core
     'colorado.apps.gundeaths',
@@ -62,6 +63,11 @@ PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.cssmin.CSSMinCompressor'
 
 STATICFILES_STORAGE = "pipeline.storage.PipelineCachedStorage"
 
+# api
+API_LIMIT_PER_PAGE = 0
+TASTYPIE_FULL_DEBUG = True
+
+# wordpress
 WORDPRESS_BLOG_URL = "http://coloradogundeaths.com"
 
 
