@@ -26,9 +26,10 @@ INSTALLED_APPS = (
 
     # 3rd party
     'coffin',
-    'south',
-    'pipeline',
     'debug_toolbar',
+    'djgeojson',
+    'pipeline',
+    'south',
 
     # core
     'colorado.apps.gundeaths',

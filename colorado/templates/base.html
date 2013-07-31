@@ -30,7 +30,7 @@
                         <a href="{% url 'gundeaths_victim_list' %}">Victims</a>
                     </li>
                     <li>
-                        <a href="#">Map</a>
+                        <a href="{% url 'gundeaths_incident_map' %}">Map</a>
                     </li>
                 </ul>
             </div>
@@ -60,5 +60,6 @@
         {% endblock footer %}
     </footer>
     {% endblock body %}
+    {% block js %}{% endblock js %}
 </body>
 </html>

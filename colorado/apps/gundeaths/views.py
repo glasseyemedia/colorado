@@ -18,9 +18,19 @@ class VictimList(JinjaMixin, ListView):
     Using a class-based view here so it's easier to
     reuse with different templates.
     """
-    queryset = Victim.objects.public(
-        ).order_by('-incident__datetime', 
-        ).select_related('incident')
+    queryset = (Victim.objects.public()
+            .order_by('-incident__datetime')
+            .select_related('incident'))
+
+
+class IncidentMap(JinjaMixin, ListView):
+    """
+    A list of incidents, meant for mapping.
+    """
+    queryset = (Incident.objects.public()
+            .filter(point__isnull=False))
+
+    template_name = "gundeaths/map.html"
 
 
 class IncidentDetail(JinjaMixin, DetailView):

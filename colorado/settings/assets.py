@@ -8,5 +8,15 @@ PIPELINE_CSS = {
             'bootstrap/css/bootstrap-responsive.css',
         ),
         'output_filename': 'css/bootstrap.css'
+    },
+}
+
+PIPELINE_JS = {
+    'leaflet': {
+        'source_filenames': (
+            'components/leaflet.markerclusterer/dist/leaflet.markercluster.js',
+        ),
+
+        'output_filename': 'js/leaflet-plugins.js'
     }
 }
