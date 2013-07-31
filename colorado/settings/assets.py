@@ -5,7 +5,7 @@ PIPELINE_CSS = {
     'site': {
         'source_filenames': (
             #'bootstrap/css/bootstrap.css',
-            'css/journal.css',
+            'bootstrap/css/journal.css',
             'bootstrap/css/bootstrap-responsive.css',
         ),
         'output_filename': 'css/site.css'
