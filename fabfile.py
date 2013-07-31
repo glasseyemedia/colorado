@@ -29,6 +29,14 @@ def rm_pyc():
     "Clear all .pyc files that might be lingering"
     local("find . -name '*.pyc' -print0|xargs -0 rm", capture=False)
 
+def deploy():
+    """
+    Push to origin and heroku, and collectstatic.
+    """
+    local('git push origin master')
+    local('git push heroku master')
+    manage('collectstatic')
+
 def drop_database():
     "Drop database. Don't do this by accident."
     with settings(warn_only=True):
