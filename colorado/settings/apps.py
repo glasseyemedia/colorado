@@ -47,6 +47,9 @@ JINJA2_EXTENSIONS = (
 
 # staticfiles
 # asset config is in assets.py
+PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.jsmin.JSMinCompressor'
+PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.slimit.SlimItCompressor'
+
 STATICFILES_STORAGE = "pipeline.storage.PipelineCachedStorage"
 
 WORDPRESS_BLOG_URL = "http://coloradogundeaths.com"
