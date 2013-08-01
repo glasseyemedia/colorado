@@ -264,6 +264,14 @@ class Victim(Person):
 
     objects = VictimManager()
 
+    def save(self, *args, **kwargs):
+        
+        # ensure dod
+        if not self.dod:
+            self.dod = self.incident.datetime.date()
+        
+        super(Victim, self).save(*args, **kwargs)
+
     def get_absolute_url(self):
         return self.incident.get_absolute_url()
 

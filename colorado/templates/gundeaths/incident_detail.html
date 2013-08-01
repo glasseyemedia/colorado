@@ -24,16 +24,16 @@
 {% endif %}
 <div class="row">
 	<div class="span4" id="victims">
-		<h4>Victims</h4>
+		<h4>Victim{{ victims|count|pluralize('s') }}</h4>
 		{% for victim in victims %}
 		<div class="victim" id="v{{ victim.id }}">
 			<h3>{{ victim.get_display_name() }}</h3>
 			<ul class="info">
-				<li>Method: {{ victim.method }}</li>
-				<li>Died: {{ victim.dod|default('Unknown') }}</li>
-				<li>Gender: {{ victim.get_gender_display() }}</li>
-				<li>Age: {{ victim.age }}</li>
-				<li>Race: {{ victim.race }}</li>
+				<li><strong>Method</strong>: {{ victim.method }}</li>
+				<li><strong>Died</strong>: {{ victim.dod|date('F j, Y')|default('Unknown') }}</li>
+				<li><strong>Gender</strong>: {{ victim.get_gender_display() }}</li>
+				<li><strong>Age</strong>: {{ victim.age }}</li>
+				<li><strong>Race</strong>: {{ victim.race }}</li>
 			</ul>
 		</div>
 		{% endfor %}
