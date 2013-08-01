@@ -27,6 +27,7 @@ PIPELINE_JS = {
         'source_filenames': (
             'components/leaflet.markerclusterer/dist/leaflet.markercluster.js',
             'components/underscore/underscore.js',
+            'jst/*.jst',
         ),
 
         'output_filename': 'js/leaflet-plugins.js'

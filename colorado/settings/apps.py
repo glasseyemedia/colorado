@@ -60,6 +60,7 @@ JINJA2_EXTENSIONS = (
 # asset config is in assets.py
 PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.jsmin.JSMinCompressor'
 PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.cssmin.CSSMinCompressor'
+PIPELINE_TEMPLATE_FUNC = "_.template"
 
 STATICFILES_STORAGE = "pipeline.storage.PipelineCachedStorage"
 

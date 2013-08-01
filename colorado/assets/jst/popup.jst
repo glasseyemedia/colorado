@@ -1,0 +1,14 @@
+<div class="incident">	
+	<h6><a href="<%= absolute_url %>"><%= datetime.toDateString() %></a></h6>
+	<div class="victims">
+		<% _.each(victims, function(victim) { %>
+		<div class="victim">
+			<p><strong><%= victim.name %></strong> 
+				<br>(<%= victim.method ? victim.method.name : 'Unknown' %>)</p>
+		</div>
+		<% }); %>
+	</div>
+	<p><%= location %>
+	<br><a href="<%= absolute_url %>">Read More</a></p>
+
+</div>

@@ -32,11 +32,14 @@ var markers = new L.FeatureGroup().addTo(map);
 $.getJSON("{% url 'api_dispatch_list' 'v1', 'incident' %}", function(incidents) {
 	window.incidents = incidents;
 	_.each(incidents.objects, function(incident) {
-		var p = incident.point.coordinates;
+
+		// fix data types
+		incident.datetime = new Date(Date.parse(incident.datetime));
 		
+		var p = incident.point.coordinates;
 		var marker = L.marker([p[1], p[0]])
 		    .addTo(markers)
-		    .bindPopup(incident.location);
+		    .bindPopup(JST.popup(incident));
 	});
 
 	map.fitBounds(markers.getBounds());
