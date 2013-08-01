@@ -19,7 +19,8 @@ class IncidentResource(ModelResource):
 
 	location = fields.CharField(attribute='location', blank=True, null=True)
 
-	# point = GeometryApiField(attribute='point', blank=True, null=True)
+	victims = fields.ToManyField('colorado.apps.gundeaths.resources.VictimResource',
+		'victims', blank=True, null=True, full=True)
 
 	class Meta:
 		allowed_methods = ('get',)
