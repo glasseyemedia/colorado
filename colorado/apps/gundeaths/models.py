@@ -216,6 +216,22 @@ class Incident(TimeStampedModel):
     def get_absolute_url(self):
         return ('gundeaths_incident_detail', None, {'pk': self.pk})
 
+    @models.permalink
+    def get_resource_uri(self):
+        """
+        Returns a URI for a TastyPie resource
+        """
+        # import here to prevent circular imports
+        from colorado.apps.api.urls import v1, IncidentResource
+
+        kwargs = {
+            'api_name': v1.api_name,
+            'resource_name': IncidentResource._meta.resource_name,
+            'pk': self.pk
+        }
+        
+        return ('api_dispatch_detail', None, kwargs)
+
 
 class Victim(Person):
     """

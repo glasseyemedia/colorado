@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, url, include
 
-from .views import IncidentDetail, IncidentMap, VictimList
+from .views import IncidentMap, VictimList, incident_detail
 
 urlpatterns = patterns('',
     url(r'^victims/$', 
@@ -12,6 +12,6 @@ urlpatterns = patterns('',
     	name="gundeaths_incident_map"),
 
     url(r'^incidents/(?P<pk>\d+)/$', 
-        IncidentDetail.as_view(), 
+        incident_detail, 
         name='gundeaths_incident_detail'),
 )

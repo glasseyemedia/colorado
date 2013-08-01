@@ -5,7 +5,7 @@ Views for victims:
  - a list view, for a map?
  - an incident detail, with profiles
 """
-
+from coffin.shortcuts import get_object_or_404, render
 from django.views.generic import DetailView, ListView
 
 from colorado.lib.views import JinjaMixin
@@ -37,4 +37,24 @@ class IncidentDetail(JinjaMixin, DetailView):
     """
     Detail view for a single incident, which may have multiple victims.
     """
-    queryset = Incident.objects.public().prefetch_related('victims')
+    queryset = Incident.objects.public()
+
+
+def incident_detail(request, pk):
+    """
+    Detail view for a single incident, which may have multiple victims.
+    """
+    incident = get_object_or_404(Incident.objects.public(), pk=pk)
+    victims = list(incident.victims.public()
+                    .select_related('incident', 'race', 'method'))
+
+    return render(request, 'gundeaths/incident_detail.html', {
+        'incident': incident, 'victims': victims
+    })
+
+
+
+
+
+
+

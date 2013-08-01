@@ -1,1 +1,61 @@
 {% extends "gundeaths/base.html" %}
+
+{% block css %}
+{{ super() }}
+<link href='//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.css' rel='stylesheet'>
+{% compressed_css "leaflet" %}
+<!--[if lte IE 8]>
+  <link href='//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.ie.css' rel='stylesheet'>
+<![endif]-->
+
+<style type="text/css">
+#map { height: 200px; }
+</style>
+{% endblock css %}
+
+{% block content %}
+{% if incident.point %}
+<div class="row">
+	<div class="span12" id="map"></div>
+	<div class="span12">
+		<p class="well well-small">{{ incident.datetime|date("F j, Y, P") }} near {{ incident.location }}</p>
+	</div>
+</div>
+{% endif %}
+<div class="row">
+	<div class="span4" id="victims">
+		<h4>Victims</h4>
+		{% for victim in victims %}
+		<div class="victim" id="v{{ victim.id }}">
+			<h3>{{ victim.get_display_name() }}</h3>
+			<ul class="info">
+				<li>Method: {{ victim.method }}</li>
+				<li>Died: {{ victim.dod|default('Unknown') }}</li>
+				<li>Gender: {{ victim.get_gender_display() }}</li>
+				<li>Age: {{ victim.age }}</li>
+				<li>Race: {{ victim.race }}</li>
+			</ul>
+		</div>
+		{% endfor %}
+	</div>
+	<div class="span8" id="news">
+		<h4>News:</h4>
+		
+	</div>
+</div>
+
+{% endblock content %}
+
+{% block js %}
+{{ super() }}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src='//api.tiles.mapbox.com/mapbox.js/v1.3.1/mapbox.js'></script>
+{% compressed_js 'leaflet' %}
+<script type="text/javascript">
+var map = L.mapbox.map('map', '{{ MAPBOX_MAP_ID }}', {scrollWheelZoom: false})
+	.setView([{{ incident.point.y }}, {{ incident.point.x }}], 9);
+
+var marker = L.marker([{{ incident.point.y }}, {{ incident.point.x }}])
+	.addTo(map);
+</script>
+{% endblock js %}
