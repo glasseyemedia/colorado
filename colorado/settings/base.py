@@ -115,6 +115,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.tz',
     'django.contrib.messages.context_processors.messages',
     'colorado.apps.news.context_processors.news_settings',
+    'colorado.apps.gundeaths.context_processors.map_settings',
 )
 
 INTERNAL_IPS = ('127.0.0.1',)

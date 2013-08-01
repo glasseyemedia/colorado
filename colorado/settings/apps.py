@@ -56,6 +56,9 @@ JINJA2_EXTENSIONS = (
     'pipeline.jinja2.ext.PipelineExtension',
 )
 
+# maps
+MAPBOX_MAP_ID = "chrisamico.map-10h9gysj"
+
 # staticfiles
 # asset config is in assets.py
 PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.jsmin.JSMinCompressor'

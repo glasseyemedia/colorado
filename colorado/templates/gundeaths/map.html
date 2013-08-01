@@ -24,7 +24,8 @@
 {% compressed_js 'leaflet' %}
 
 <script type="text/javascript">
-var map = L.mapbox.map('map', 'chrisamico.map-10h9gysj')
+var map = L.mapbox.map('map', '{{ MAPBOX_MAP_ID }}')
+	.addControl(L.mapbox.geocoderControl('{{ MAPBOX_MAP_ID }}'))
     .setView([38.76473, -106.29198], 7);
 
 var markers = new L.FeatureGroup().addTo(map);
