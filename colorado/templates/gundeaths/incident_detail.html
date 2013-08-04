@@ -53,7 +53,7 @@
 {% compressed_js 'leaflet' %}
 <script type="text/javascript">
 var map = L.mapbox.map('map', '{{ MAPBOX_MAP_ID }}', {scrollWheelZoom: false})
-	.setView([{{ incident.point.y }}, {{ incident.point.x }}], 9);
+	.setView([{{ incident.point.y }}, {{ incident.point.x }}], 12);
 
 var marker = L.marker([{{ incident.point.y }}, {{ incident.point.x }}])
 	.addTo(map);

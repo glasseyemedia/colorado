@@ -158,6 +158,7 @@ def safe_type(cast, value, default=None):
     except ValueError:
         return default
 
+
 def safe_date(date_str, default=None):
     """
     Safely returns a timezone-aware datetime object, or default.

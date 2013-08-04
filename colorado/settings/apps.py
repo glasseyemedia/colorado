@@ -30,6 +30,7 @@ INSTALLED_APPS = (
     'coffin',
     'debug_toolbar',
     'djgeojson',
+    'flatblocks',
     'pipeline',
     'south',
     'tastypie',
@@ -47,12 +48,18 @@ AWS_S3_SECURE_URLS = False
 AWS_QUERYSTRING_AUTH = False
 
 
+# api
+API_LIMIT_PER_PAGE = 0
+TASTYPIE_FULL_DEBUG = True
+
+# debug toolbar
 DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
 }
 
 # templates
 JINJA2_EXTENSIONS = (
+    'jinja2.ext.autoescape',
     'pipeline.jinja2.ext.PipelineExtension',
 )
 
@@ -67,9 +74,8 @@ PIPELINE_TEMPLATE_FUNC = "_.template"
 
 STATICFILES_STORAGE = "pipeline.storage.PipelineCachedStorage"
 
-# api
-API_LIMIT_PER_PAGE = 0
-TASTYPIE_FULL_DEBUG = True
+# flatblocks
+FLATBLOCKS_AUTOCREATE_STATIC_BLOCKS = True
 
 # wordpress
 WORDPRESS_BLOG_URL = "http://coloradogundeaths.com"

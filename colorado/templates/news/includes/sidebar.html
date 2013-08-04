@@ -1,0 +1,10 @@
+{% set sidebar = wp_sidebar('sidebar-1') %}
+<section class="about">
+	{{ flatblock('about') }}
+</section>
+
+<section id="{{ sidebar.sidebar_id }}">
+{% for widget in sidebar.widgets %}
+	{{ widget.widget|safe }}
+{% endfor %}
+</section>
