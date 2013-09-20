@@ -1,5 +1,7 @@
 import os
+import textwrap
 import urllib2
+
 from optparse import make_option
 from django.core.management.base import LabelCommand
 
@@ -28,3 +30,7 @@ class Command(LabelCommand):
 
         self.stdout.write('Total incidents: %i' % Incident.objects.count())
         self.stdout.write('Total victims: %i' % Victim.objects.count())
+
+    @property
+    def help(self):
+        return textwrap.dedent(self.handle_label.__doc__).strip()
