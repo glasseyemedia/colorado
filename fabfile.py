@@ -44,7 +44,11 @@ def drop_database():
 
 def create_database():
     "Create our local database."
-    local('createdb -T template_postgis %(db_name)s' % env)
+    #local('createdb -T template_postgis %(db_name)s' % env)
+    local('createdb %(db_name)s' % env)
+    local('psql -c "CREATE EXTENSION postgis" -d %(db_name)s' % env)
+    local('psql -c "CREATE EXTENSION postgis_topology" -d %(db_name)s' % env)
+
 
 def reset():
     "Drop and recreate the local database."
