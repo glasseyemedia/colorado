@@ -1,17 +1,56 @@
 from django.contrib.gis import admin
 from django.db.models import Count
+from django.forms import ModelForm, TextInput
+
+from suit.widgets import SuitSplitDateTimeWidget
+from suit_redactor.widgets import RedactorWidget
 
 from .models import Method, Race, Incident, Victim
 from .models import DATE_FORMAT, DATETIME_FORMAT
 
-# actions
+####################
+# Forms
+####################
+
+class IncidentForm(ModelForm):
+    """
+    Override the default Incident form to customize widgets
+    """
+    class Meta:
+        #model = Incident
+        widgets = {
+            'datetime': SuitSplitDateTimeWidget,
+            'description': RedactorWidget(editor_options={'lang': 'en'})
+        }
+
+
+class PersonForm(ModelForm):
+    """
+    Override the default Person form
+    """
+    class Meta:
+        model = Victim
+        widgets = {
+            'bio': RedactorWidget(editor_options={'lang': 'en'}),
+            'residence_address': TextInput
+        }
+
+############
+# Actions
+############
+
 def make_public(modeladmin, request, queryset):
     queryset.update(public=True)
 make_public.short_description = "Mark selected items as public"
 
+##############
+# ModelAdmins
+##############
+
 class VictimInline(admin.StackedInline):
     # classes = ('collapse open',)
     extra = 1
+    form = PersonForm
     prepopulated_fields = {'slug': Victim.NAME_FIELDS }
     model = Victim
 
@@ -35,11 +74,23 @@ class SimpleAdmin(admin.ModelAdmin):
 
 class IncidentAdmin(admin.OSMGeoAdmin):
     actions = [make_public]
+    form = IncidentForm
     inlines = [VictimInline]
     
     date_hierarchy = "datetime"
     list_display = ('datetime', 'address', 'city', 'victim_links', 'public')
     list_filter = ('public', 'city')
+
+    fieldsets = (
+        (None, {
+            'fields': ('public', 'datetime', 'address', 'city', 'state', 'point')
+        }),
+
+        (None, {
+            'fields': ('description',),
+            #'classes': ('full-width',)
+        }),
+    )
 
     def victim_links(self, obj):
         return ", ".join(unicode(v) for v in obj.victims.all())
@@ -47,6 +98,7 @@ class IncidentAdmin(admin.OSMGeoAdmin):
 
 class VictimAdmin(admin.ModelAdmin):
     actions = [make_public]
+    form = PersonForm
 
     list_display = ('name', 'method', 'dod', 'dob', 'age', 'gender', 'race', 'public')
     list_editable = ('gender', 'race')

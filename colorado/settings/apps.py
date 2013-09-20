@@ -23,6 +23,8 @@ INSTALLED_APPS = (
     'django.contrib.gis',
 
     # admin
+    'suit',
+    'suit_redactor',
     'django.contrib.admin',
     'django.contrib.admindocs',
 
@@ -76,6 +78,11 @@ STATICFILES_STORAGE = "pipeline.storage.PipelineCachedStorage"
 
 # flatblocks
 FLATBLOCKS_AUTOCREATE_STATIC_BLOCKS = True
+
+# suit
+SUIT_CONFIG = {
+    'CONFIRM_UNSAVED_CHANGES': False
+}
 
 # wordpress
 WORDPRESS_BLOG_URL = "http://coloradogundeaths.com"
