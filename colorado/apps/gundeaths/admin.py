@@ -17,10 +17,10 @@ class IncidentForm(ModelForm):
     Override the default Incident form to customize widgets
     """
     class Meta:
-        #model = Incident
+        model = Incident
         widgets = {
             'datetime': SuitSplitDateTimeWidget,
-            'description': RedactorWidget(editor_options={'lang': 'en'})
+            'description': RedactorWidget(editor_options={'lang': 'en'}),
         }
 
 

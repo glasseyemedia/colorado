@@ -33,6 +33,7 @@ INSTALLED_APPS = (
     'debug_toolbar',
     'djgeojson',
     'flatblocks',
+    'leaflet',
     'pipeline',
     'south',
     'tastypie',
@@ -78,6 +79,18 @@ STATICFILES_STORAGE = "pipeline.storage.PipelineCachedStorage"
 
 # flatblocks
 FLATBLOCKS_AUTOCREATE_STATIC_BLOCKS = True
+
+# django-leaflet
+LEAFLET_CONFIG = {
+    'DEFAULT_CENTER': (6.0, 45.0),
+    'DEFAULT_ZOOM': 16,
+    'TILES': 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    'PLUGINS': {
+        'forms': {
+            'auto-include': True
+        }
+    }
+}
 
 # suit
 SUIT_CONFIG = {
