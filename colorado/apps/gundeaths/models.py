@@ -255,7 +255,7 @@ class Victim(Person):
     place_of_death = models.CharField(max_length=10, 
         choices=PLACES_OF_DEATH, blank=True)
     
-    obit = models.URLField("Obituary", max_length=300, blank=True,
+    obit = models.URLField('Obituary', max_length=300, blank=True,
         help_text="Link to this person's official obituary")
 
     residence_address = models.TextField(blank=True)

@@ -39,7 +39,15 @@
 		{% endfor %}
 	</div>
 	<div class="span8" id="news">
-		<h4>News:</h4>
+		<div class="description">
+			{% if incident.description %}
+			<h4>Summary:</h4>
+			{{ incident.description }}
+			{% endif %}
+		</div>
+		<div class="news">
+			<h4>News:</h4>
+		</div>
 		
 	</div>
 </div>
