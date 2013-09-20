@@ -42,7 +42,7 @@
 		<div class="description">
 			{% if incident.description %}
 			<h4>Summary:</h4>
-			{{ incident.description }}
+			{{ incident.description|safe }}
 			{% endif %}
 		</div>
 		<div class="news">
