@@ -29,11 +29,18 @@
 		<div class="victim" id="v{{ victim.id }}">
 			<h3>{{ victim.get_display_name() }}</h3>
 			<ul class="info">
+				{% if victim.method %}
 				<li><strong>Method</strong>: {{ victim.method }}</li>
+				{% endif %}
+
 				<li><strong>Died</strong>: {{ victim.dod|date('F j, Y')|default('Unknown') }}</li>
+				
 				<li><strong>Gender</strong>: {{ victim.get_gender_display() }}</li>
-				<li><strong>Age</strong>: {{ victim.age }}</li>
+				
+				<li><strong>Age</strong>: {{ victim.age|default('Unknown') }}</li>
+				{% if victim.race %}
 				<li><strong>Race</strong>: {{ victim.race }}</li>
+				{% endif %}
 			</ul>
 		</div>
 		{% endfor %}
@@ -45,10 +52,11 @@
 			{{ incident.description|safe }}
 			{% endif %}
 		</div>
+		{# Pushing updates to later
 		<div class="news">
 			<h4>News:</h4>
 		</div>
-		
+		#}
 	</div>
 </div>
 
