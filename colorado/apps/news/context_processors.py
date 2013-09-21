@@ -8,5 +8,6 @@ def news_settings(request):
 	Inject useful settings into every context.
 	"""
 	return {
-	    'WORDPRESS_BLOG_URL': settings.WORDPRESS_BLOG_URL
+	    'WORDPRESS_BLOG_URL': settings.WORDPRESS_BLOG_URL,
+	    'DISQUS_SHORTNAME': getattr(settings, 'DISQUS_SHORTNAME', None)
 	}

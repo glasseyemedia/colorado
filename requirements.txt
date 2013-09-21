@@ -9,6 +9,7 @@ cssmin==0.1.4
 dj-database-url==0.2.1
 django-boundaryservice==0.1.11
 django-debug-toolbar==0.9.4
+django-disqus==0.4.1
 django-flatblocks==0.7.1
 django-geojson==2.0.1
 django-getenv==1.1

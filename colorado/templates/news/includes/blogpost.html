@@ -1,7 +1,10 @@
 {# an individual post, either in a list or by itself #}
+
 {% if page is defined %}
+{# allow the same template for pages, since the structure is the same #}
 {% set post = page %}
 {% endif %}
+
 <article id="post-{{ post.id }}">
 	<header>
 		{% if single %}

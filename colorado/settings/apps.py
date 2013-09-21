@@ -31,6 +31,7 @@ INSTALLED_APPS = (
     # 3rd party
     'coffin',
     'debug_toolbar',
+    'disqus',
     'djgeojson',
     'flatblocks',
     'leaflet',
@@ -79,6 +80,10 @@ STATICFILES_STORAGE = "pipeline.storage.PipelineCachedStorage"
 
 # flatblocks
 FLATBLOCKS_AUTOCREATE_STATIC_BLOCKS = True
+
+# disqus
+DISQUS_API_KEY = "KZizNwNvU3pGYiZonR3TiRXg5f51DWauO821oGF8zXCU9OK4nP1oCGu0kZnkZ7Ho"
+DISQUS_WEBSITE_SHORTNAME = "coloradogundeaths"
 
 # django-leaflet
 LEAFLET_CONFIG = {

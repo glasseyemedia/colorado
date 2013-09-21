@@ -51,6 +51,11 @@
 			<h4>Summary:</h4>
 			{{ incident.description|safe }}
 			{% endif %}
+
+			<div class="comments">
+				<h5>Share a memory:</h5>
+				{% include "news/includes/comments.html" %}
+			</div>
 		</div>
 		{# Pushing updates to later
 		<div class="news">

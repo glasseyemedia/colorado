@@ -1,7 +1,11 @@
 {% extends "news/base.html" %}
 
+{% block title %}{{ post.title }} | {{ super() }}{% endblock title %}
+
 {% block posts %}
-
-{% include "news/includes/blogpost.html" %}
-
+	{% include "news/includes/blogpost.html" %}
 {% endblock posts %}
+
+{% block after_posts %}
+	{% include "news/includes/comments.html" %}
+{% endblock after_posts %}
