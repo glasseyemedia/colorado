@@ -1,16 +1,21 @@
 import csv
 import logging
 import urllib2
-
+import urlparse
 import pytz
 
 from dateutil.parser import parse
 from django.conf import settings
 from django.template.defaultfilters import slugify
+from wordpress import WordPress, WordPressError
 
 from .models import Method, Race, Incident, Victim
 
 log = logging.getLogger('colorado.apps.gundeaths')
+
+# create a wordpress object, sans cache
+wp = WordPress(settings.WORDPRESS_BLOG_URL, None)
+
 
 def load_victims(file, public=False):
     """
@@ -120,6 +125,51 @@ def load_victims(file, public=False):
             })
 
         log_created(victim, created)
+
+
+def load_summaries(file):
+    """
+    Load summaries from WordPress, using an open CSV file.
+    This function expects a column called WP_URL, pointing to a single blog post.
+    The blog must have the WordPress JSON API plugin installed and configured to allow
+    proxying (by appending `json=1` to the querystring).
+
+    This also assumes victims and incidents have already been loaded into the database.
+    It will check for existence but skip names that don't match an existing record.
+    """
+    reader = csv.DictReader(file)
+
+    for row in reader:
+
+        # get victim by name
+        name = row.get('Name').strip()
+        try:
+            victim = Victim.objects.get(name=name)
+        
+        # catch unmatched names, probably not yet loaded
+        except Victim.DoesNotExist:
+            log.debug('Victim not found: %s', name)
+            continue
+
+        # catch multiples, probably "unnamed man"
+        except Victim.MultipleObjectsReturned:
+            log.debug('Multiple victims found: %s', name)
+            continue
+
+        WP_URL = row.get('WP_URL').strip()
+        if not WP_URL:
+            log.debug('No blog post associated with victim: %s', name)
+            continue
+
+        # fetch post JSON
+        path = urlparse.urlparse(WP_URL).path
+        post = wp.proxy(path)
+
+        # set incident description from post
+        victim.incident.desciption = post['post']['content']
+        victim.incident.save()
+
+        log.debug('Set description for incident: %s', unicode(victim.incident).encode('utf-8'))
 
 
 def get_or_create_cat(Model, name, **defaults):
