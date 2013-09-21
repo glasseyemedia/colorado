@@ -31,5 +31,16 @@ PIPELINE_JS = {
         ),
 
         'output_filename': 'js/leaflet-plugins.js'
+    },
+
+    'd3': {
+        'source_filenames': (
+            'components/underscore/underscore.js',
+            'components/d3/d3.min.js',
+            'components/colorbrewer/colorbrewer.js',
+            'components/nvd3/nv.d3.js'
+        ),
+
+        'output_filename': 'js/d3-components.js'
     }
 }

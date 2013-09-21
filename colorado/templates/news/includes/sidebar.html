@@ -3,8 +3,13 @@
 	{{ flatblock('about') }}
 </section>
 
+<section class="viz">
+	<div id="piechart"></div>
+</section>
+
 <section id="{{ sidebar.sidebar_id }}">
 {% for widget in sidebar.widgets %}
 	{{ widget.widget|safe }}
 {% endfor %}
 </section>
+

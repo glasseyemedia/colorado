@@ -5,7 +5,11 @@ Views for victims:
  - a list view, for a map?
  - an incident detail, with profiles
 """
+import json
+
 from coffin.shortcuts import get_object_or_404, render
+from django.db.models import Count
+from django.http import HttpResponse
 from django.views.generic import DetailView, ListView
 
 from colorado.lib.views import JinjaMixin
@@ -33,13 +37,6 @@ class IncidentMap(JinjaMixin, ListView):
     template_name = "gundeaths/map.html"
 
 
-class IncidentDetail(JinjaMixin, DetailView):
-    """
-    Detail view for a single incident, which may have multiple victims.
-    """
-    queryset = Incident.objects.public()
-
-
 def incident_detail(request, pk):
     """
     Detail view for a single incident, which may have multiple victims.
@@ -52,7 +49,25 @@ def incident_detail(request, pk):
         'incident': incident, 'victims': victims
     })
 
+#############
+# Aggregates
+#############
 
+def victims_by_method(request):
+    """
+    Return victims by method, as JSON.
+    """
+    victims = Victim.objects.public()
+    methods = (victims.order_by('method')
+                .values('method__name')
+                .annotate(count=Count('method__name')))
+
+    data = {
+        'count': victims.count(),
+        'methods': [m for m in methods if m['count'] > 0]
+    }
+
+    return HttpResponse(json.dumps(data), content_type='application/json')
 
 
 

@@ -19,3 +19,22 @@
 	</div>
 </div>
 {% endblock content %}
+
+{% block js %}
+{% compressed_js 'd3' %}
+<script type="text/javascript">
+d3.json("{% url 'victims_by_method' %}", function(err, data) {
+	window.data = data;
+	window.chart = nv.models.pieChart()
+	    .x(function(d) { return d['method__name']; })
+	    .y(function(d) { return d.count; })
+	    .showLabels(false);
+	 
+	d3.select("#piechart").append('svg')
+	    .datum(data.methods)
+	    .style('height', '350px')
+	    .call(chart);
+		 
+});
+</script>
+{% endblock js %}
