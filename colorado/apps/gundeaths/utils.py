@@ -74,6 +74,9 @@ def load_victims(file, public=False):
     Obituary (optional)
         Link to official obit.
 
+    WP_URL
+        Link to a blog post that can be imported as incident.description
+
     """
     # normalize genders
     GENDERS = {
@@ -125,6 +128,21 @@ def load_victims(file, public=False):
             })
 
         log_created(victim, created)
+
+        WP_URL = row.get('WP_URL', '').strip()
+        if not WP_URL:
+            log.debug('No blog post associated with victim: %s', victim.name)
+            continue
+
+        # fetch post JSON
+        path = urlparse.urlparse(WP_URL).path
+        post = wp.proxy(path)
+
+        # set incident description from post
+        incident.desciption = post['post']['content']
+        incident.save()
+
+        log.debug('Set description for incident: %s', unicode(victim.incident).encode('utf-8'))
 
 
 def load_summaries(file):
