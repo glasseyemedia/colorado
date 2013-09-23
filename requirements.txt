@@ -7,6 +7,7 @@ South==0.8.2
 boto==2.9.5
 cssmin==0.1.4
 dj-database-url==0.2.1
+dj-redis-url==0.1.4
 django-boundaryservice==0.1.11
 django-debug-toolbar==0.9.4
 django-disqus==0.4.1
@@ -17,6 +18,7 @@ django-leaflet==0.8.0
 django-localflavor-us==1.1
 django-model-utils==1.3.1
 django-pipeline==1.3.12
+django-redis-cache==0.10.0
 django-storages==1.1.8
 django-suit==0.2.4
 django-suit-redactor==0.0.2
@@ -27,6 +29,7 @@ geopy==0.95.1
 gevent==0.13.8
 greenlet==0.4.0
 gunicorn==0.17.4
+hiredis==0.1.1
 httplib2==0.8
 jsmin==2.0.3
 mimeparse==0.1.3
@@ -39,6 +42,7 @@ python-dateutil==2.1
 python-digest==1.7
 python-wordpress==0.1.3
 pytz==2013b
+redis==2.8.0
 requests==1.2.3
 six==1.4.1
 slimit==0.8.1

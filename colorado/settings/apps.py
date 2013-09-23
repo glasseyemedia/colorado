@@ -1,6 +1,8 @@
 from getenv import env
+import dj_redis_url
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -8,6 +10,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'pipeline.middleware.MinifyHTMLMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -51,10 +54,27 @@ AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_SECURE_URLS = False
 AWS_QUERYSTRING_AUTH = False
 
-
 # api
 API_LIMIT_PER_PAGE = 0
 TASTYPIE_FULL_DEBUG = True
+
+# caching and redis
+REDIS = dj_redis_url.config(default='redis://localhost:6379')
+
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': '%(HOST)s:%(PORT)s' % REDIS,
+        'OPTIONS': {
+            'DB': REDIS['DB'],
+            'PASSWORD': REDIS['PASSWORD'],
+            'PARSER_CLASS': 'redis.connection.HiredisParser'
+        },
+    },
+}
+
+CACHE_MIDDLEWARE_SECONDS = 0
+CACHE_MIDDLEWARE_KEY_PREFIX = "coguns"
 
 # debug toolbar
 DEBUG_TOOLBAR_CONFIG = {

@@ -1,6 +1,8 @@
 from colorado.settings import *
 
-DEBUG = True
+DEBUG = env('DEBUG', False)
+
+CACHE_MIDDLEWARE_SECONDS = 60 * 10
 
 # heroku specific settings
 GEOS_LIBRARY_PATH = '/app/.geodjango/geos/lib/libgeos_c.so'

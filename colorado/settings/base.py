@@ -1,6 +1,8 @@
 # Django settings for colorado project.
-import dj_database_url
 import os
+
+import dj_database_url
+import dj_redis_url
 
 SETTINGS = os.path.realpath(os.path.dirname(__file__))
 PROJECT_ROOT = os.path.dirname(SETTINGS)
@@ -21,6 +23,8 @@ DATABASES = {
     'default': dj_database_url.config(
         default='postgis://postgres:geodjango@localhost:5432/%s' % SITE_SLUG)
 }
+
+REDIS = dj_redis_url.config(default='redis://localhost:6379')
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
