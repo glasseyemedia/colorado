@@ -168,8 +168,8 @@ class Incident(TimeStampedModel):
     public = models.BooleanField(default=False)
     datetime = models.DateTimeField()
 
-    address = models.CharField("Street Address", max_length=255)
-    city = models.CharField(max_length=255)
+    address = models.CharField("Street Address", max_length=255, blank=True)
+    city = models.CharField(max_length=255, blank=True)
     state = USStateField(default=DEFAULT_STATE)
     point = models.PointField(blank=True, null=True)
 
