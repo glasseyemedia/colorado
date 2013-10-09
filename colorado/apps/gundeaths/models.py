@@ -84,7 +84,7 @@ class Person(TimeStampedModel):
     display_name = models.CharField(max_length=300, blank=True,
         help_text='Optional: Override other name fields and display this instead.')
 
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, blank=True)
 
     # metadata
     dob = models.DateField('Date of Birth', blank=True, null=True)
@@ -267,7 +267,7 @@ class Victim(Person):
     def save(self, *args, **kwargs):
         
         # ensure dod
-        if not self.dod:
+        if not self.dod and self.incident:
             self.dod = self.incident.datetime.date()
         
         super(Victim, self).save(*args, **kwargs)

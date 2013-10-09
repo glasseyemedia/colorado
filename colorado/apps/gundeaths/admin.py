@@ -100,13 +100,20 @@ class VictimAdmin(admin.ModelAdmin):
     actions = [make_public]
     form = PersonForm
 
+    exclude = ('slug',)
+
     list_display = ('name', 'method', 'dod', 'dob', 'age', 'gender', 'race', 'public')
     list_editable = ('gender', 'race')
     list_filter = ('public', 'method', 'age', 'race', 'gender')
 
     search_fields = Victim.NAME_FIELDS
 
-    prepopulated_fields = {'slug': Victim.NAME_FIELDS }
+    def save_model(self, request, obj, form, change):
+        """
+        Save hook to auto-fill slug.
+        """
+        obj.slug = obj.slugify()
+        obj.save()
 
 
 admin.site.register(Method, SimpleAdmin)
