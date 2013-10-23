@@ -1,5 +1,7 @@
-from getenv import env
+# app-related settings, including middleware
+
 import dj_redis_url
+from getenv import env
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.cache.UpdateCacheMiddleware',
@@ -26,8 +28,8 @@ INSTALLED_APPS = (
     'django.contrib.gis',
 
     # admin
-    'suit',
-    'suit_redactor',
+    'redactor',
+    'grappelli',
     'django.contrib.admin',
     'django.contrib.admindocs',
 

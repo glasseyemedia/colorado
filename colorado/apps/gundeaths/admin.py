@@ -2,8 +2,8 @@ from django.contrib.gis import admin
 from django.db.models import Count
 from django.forms import ModelForm, TextInput
 
-from suit.widgets import SuitSplitDateTimeWidget
-from suit_redactor.widgets import RedactorWidget
+#from suit.widgets import SuitSplitDateTimeWidget
+from redactor.widgets import AdminRedactorEditor
 
 from .models import Method, Race, Incident, Victim
 from .models import DATE_FORMAT, DATETIME_FORMAT
@@ -19,8 +19,8 @@ class IncidentForm(ModelForm):
     class Meta:
         model = Incident
         widgets = {
-            'datetime': SuitSplitDateTimeWidget,
-            'description': RedactorWidget(editor_options={'lang': 'en'}),
+            #'datetime': SuitSplitDateTimeWidget,
+            'description': AdminRedactorEditor(),
         }
 
 
@@ -31,7 +31,7 @@ class PersonForm(ModelForm):
     class Meta:
         model = Victim
         widgets = {
-            'bio': RedactorWidget(editor_options={'lang': 'en'}),
+            'bio': AdminRedactorEditor(),
             'residence_address': TextInput
         }
 
