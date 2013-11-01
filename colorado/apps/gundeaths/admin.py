@@ -77,7 +77,7 @@ class SimpleAdmin(admin.ModelAdmin):
 
 
 class IncidentAdmin(admin.OSMGeoAdmin):
-    actions = [make_public]
+    actions = [make_public, 'export']
     form = IncidentForm
     inlines = [VictimInline]
     
@@ -98,6 +98,13 @@ class IncidentAdmin(admin.OSMGeoAdmin):
 
     def victim_links(self, obj):
         return ", ".join(unicode(v) for v in obj.victims.all())
+
+    def export(self, request, queryset):
+        """
+        Export victims from these incidents.
+        """
+        qs = Victim.objects.filter(incident__in=queryset).select_related('incident')
+        return export_victims(qs)
 
 
 class VictimAdmin(admin.ModelAdmin):
@@ -131,34 +138,42 @@ class VictimAdmin(admin.ModelAdmin):
         """
         Dump victims to CSV.
         """
-        # get a response we can write to
-        response = HttpResponse(mimetype='text/csv')
-        response['Content-Disposition'] = "attachment; filename=victims.csv"
+        return export_victims(queryset)
 
-        # get a writer
-        incident_fields = ['datetime', 'address', 'city', 'state']
-        victim_fields = [
-            'id', 'first', 'middle', 'last', 'suffix', 'display_name', 'alias',
-            'dob', 'dod', 'age', 'gender', 'method', 'race', 'place_of_death']
 
-        fields = incident_fields + victim_fields
+def export_victims(queryset):
+    """
+    Dump victims to CSV. 
+    Takes a victims queryset and returns a CSV response.
+    """
+    # get a response we can write to
+    response = HttpResponse(mimetype='text/csv')
+    response['Content-Disposition'] = "attachment; filename=victims.csv"
 
-        writer = csv.DictWriter(response, fields)
+    # get a writer
+    incident_fields = ['datetime', 'address', 'city', 'state']
+    victim_fields = [
+        'id', 'first', 'middle', 'last', 'suffix', 'display_name', 'alias',
+        'dob', 'dod', 'age', 'gender', 'method', 'race', 'place_of_death']
 
-        # write header
-        writer.writeheader()
+    fields = incident_fields + victim_fields
 
-        for victim in queryset:
-            row = {}
-            for f in fields:
-                if hasattr(victim, f):
-                    row[f] = unicode(getattr(victim, f, '')).encode('utf-8')
-                else:
-                    row[f] = unicode(getattr(victim.incident, f, '')).encode('utf-8')
+    writer = csv.DictWriter(response, fields)
 
-            writer.writerow(row)
+    # write header
+    writer.writeheader()
 
-        return response
+    for victim in queryset:
+        row = {}
+        for f in fields:
+            if hasattr(victim, f):
+                row[f] = unicode(getattr(victim, f, '')).encode('utf-8')
+            else:
+                row[f] = unicode(getattr(victim.incident, f, '')).encode('utf-8')
+
+        writer.writerow(row)
+
+    return response
 
 
 admin.site.register(Method, SimpleAdmin)
