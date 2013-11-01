@@ -12,6 +12,7 @@ from django.template.loader import render_to_string
 
 from django_localflavor_us.models import USStateField
 
+from boundaryservice.models import Boundary
 from model_utils import Choices
 from model_utils.models import TimeStampedModel
 from nameparser import HumanName
@@ -207,6 +208,14 @@ class Incident(TimeStampedModel):
                 log.warning('Geocode failed for %s: %s', self.location, str(e))
         else:
             return self.point
+
+    def get_county(self):
+        """
+        Find the county this incident is in.
+        Requires geocoded location.
+        """
+        if self.point:
+            return Boundary.objects.get(shape__contains=self.point, kind='County')
 
     def save(self, *args, **kwargs):
         self.point = self.geocode()

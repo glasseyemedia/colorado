@@ -151,7 +151,7 @@ def export_victims(queryset):
     response['Content-Disposition'] = "attachment; filename=victims.csv"
 
     # get a writer
-    incident_fields = ['datetime', 'address', 'city', 'state']
+    incident_fields = ['datetime', 'address', 'city', 'state', 'county']
     victim_fields = [
         'id', 'first', 'middle', 'last', 'suffix', 'display_name', 'alias',
         'dob', 'dod', 'age', 'gender', 'method', 'race', 'place_of_death']
@@ -170,6 +170,9 @@ def export_victims(queryset):
                 row[f] = unicode(getattr(victim, f, '')).encode('utf-8')
             else:
                 row[f] = unicode(getattr(victim.incident, f, '')).encode('utf-8')
+
+            # counties are special
+            row['county'] = victim.incident.get_county()
 
         writer.writerow(row)
 

@@ -34,6 +34,8 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
 
     # 3rd party
+    'tastypie',
+    'boundaryservice',
     'coffin',
     'debug_toolbar',
     'disqus',
@@ -42,7 +44,6 @@ INSTALLED_APPS = (
     'leaflet',
     'pipeline',
     'south',
-    'tastypie',
 
     # core
     'colorado.apps.gundeaths',
