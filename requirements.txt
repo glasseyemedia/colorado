@@ -1,5 +1,5 @@
 Coffin==0.3.8
-Django==1.5.4
+Django==1.5.5
 Fabric==1.6.1
 Jinja2==2.7
 MarkupSafe==0.18
@@ -19,7 +19,7 @@ django-leaflet==0.8.0
 django-localflavor-us==1.1
 django-model-utils==1.3.1
 django-pipeline==1.3.12
--e git+git@github.com:mazelife/django-redactor.git@ae35b6c454661cc6140cf5f29c0b2da3b96251ce#egg=django_redactor-dev
+-e git+https://github.com/mazelife/django-redactor.git@ae35b6c454661cc6140cf5f29c0b2da3b96251ce#egg=django_redactor-dev
 django-redis-cache==0.10.0
 django-storages==1.1.8
 django-tastypie==0.10.0
