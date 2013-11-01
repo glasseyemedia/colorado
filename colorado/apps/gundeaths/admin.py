@@ -1,5 +1,9 @@
+import csv
+import datetime
+
 from django.contrib.gis import admin
 from django.db.models import Count
+from django.http import HttpResponse
 from django.forms import ModelForm, TextInput
 
 #from suit.widgets import SuitSplitDateTimeWidget
@@ -97,7 +101,7 @@ class IncidentAdmin(admin.OSMGeoAdmin):
 
 
 class VictimAdmin(admin.ModelAdmin):
-    actions = [make_public]
+    actions = [make_public, 'export']
     form = PersonForm
 
     exclude = ('slug',)
@@ -108,12 +112,53 @@ class VictimAdmin(admin.ModelAdmin):
 
     search_fields = Victim.NAME_FIELDS
 
+    def queryset(self, request):
+        """
+        Make sure we select_related.
+        """
+        qs = super(VictimAdmin, self).queryset(request)
+        qs = qs.select_related('incident', 'method', 'race')
+        return qs
+
     def save_model(self, request, obj, form, change):
         """
         Save hook to auto-fill slug.
         """
         obj.slug = obj.slugify()
         obj.save()
+
+    def export(self, request, queryset):
+        """
+        Dump victims to CSV.
+        """
+        # get a response we can write to
+        response = HttpResponse(mimetype='text/csv')
+        response['Content-Disposition'] = "attachment; filename=victims.csv"
+
+        # get a writer
+        incident_fields = ['datetime', 'address', 'city', 'state']
+        victim_fields = [
+            'id', 'first', 'middle', 'last', 'suffix', 'display_name', 'alias',
+            'dob', 'dod', 'age', 'gender', 'method', 'race', 'place_of_death']
+
+        fields = incident_fields + victim_fields
+
+        writer = csv.DictWriter(response, fields)
+
+        # write header
+        writer.writeheader()
+
+        for victim in queryset:
+            row = {}
+            for f in fields:
+                if hasattr(victim, f):
+                    row[f] = unicode(getattr(victim, f, '')).encode('utf-8')
+                else:
+                    row[f] = unicode(getattr(victim.incident, f, '')).encode('utf-8')
+
+            writer.writerow(row)
+
+        return response
 
 
 admin.site.register(Method, SimpleAdmin)
