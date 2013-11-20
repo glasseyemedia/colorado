@@ -41,6 +41,9 @@ class VictimQuerySet(PersonQuerySet):
         """
         return groupby(self, lambda v: v.incident_id)
 
+    def public(self):
+        return self.filter(public=True, incident__isnull=False)
+
 
 class IncidentQuerySet(GeoQuerySet):
     """
