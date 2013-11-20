@@ -1,4 +1,4 @@
-Colorado Gun Deaths
+Colorado Gun Dialog
 ===================
 
 This is a structured beat covering all gun deaths in Colorado. It includes records of homicides, suicides, accidental deaths and officer-involved shootings. The project is a collaboration between the University of Colorado in Boulder and Glass Eye Media LLC.
