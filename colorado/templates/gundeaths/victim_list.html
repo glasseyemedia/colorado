@@ -36,7 +36,7 @@
             
                 <a href="{{ victim.incident.get_absolute_url() }}"
                    class="victim"
-                   id="victim-{{ victim.id }}">{{ victim.name }}</a>
+                   id="victim-{{ victim.id }}">{{ victim.get_display_name() }}</a>
                    <span class="separator">&diams;</span>
                 {% endfor %}
 

@@ -3,7 +3,7 @@
 	<div class="victims">
 		<% _.each(victims, function(victim) { %>
 		<div class="victim">
-			<p><strong><%= victim.name %></strong> 
+			<p><strong><%= victim.display_name || victim.name %></strong> 
 				<br>(<%= victim.method ? victim.method.name : 'Unknown' %>)</p>
 		</div>
 		<% }); %>
