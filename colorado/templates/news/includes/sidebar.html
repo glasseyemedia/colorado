@@ -7,6 +7,20 @@
 	<div id="piechart"></div>
 </section>
 
+<section class="recent-incidnets">
+	<h3>Recent gun deaths</h3>
+	{% for incident in recent_incidents(10) %}
+	<div id="incident-{{ incident.id }}">
+		<h4>
+			<a href="{{ incident.get_absolute_url() }}">{{ incident.datetime|date('F j, Y') }}</a>
+		</h4>
+		<h5>{{ incident.location }}</h5>
+		{{ incident.description|safe }}
+
+	</div>
+	{% endfor %}
+</section>
+
 <section id="{{ sidebar.sidebar_id }}">
 {% for widget in sidebar.widgets %}
 	{{ widget.widget|safe }}

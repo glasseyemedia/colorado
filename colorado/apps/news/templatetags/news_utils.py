@@ -8,6 +8,7 @@ from django.utils.dateformat import DateFormat
 from jinja2 import Markup
 from flatblocks.models import FlatBlock
 
+from colorado.apps.gundeaths.models import Incident
 from colorado.apps.news.views import wp
 
 register = template.Library()
@@ -58,3 +59,10 @@ def flatblock(slug, template='flatblocks/flatblock.html'):
 
 	return Markup(render_to_string(template, {'flatblock': fb}))
 
+
+@register.object
+def recent_incidents(count=10):
+	"""
+	Return the `count` most recent incidents.
+	"""
+	return Incident.objects.public().exclude(description='')[:count]
