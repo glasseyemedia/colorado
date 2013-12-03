@@ -127,6 +127,6 @@ SUIT_CONFIG = {
 }
 
 # wordpress
-WORDPRESS_BLOG_URL = "http://coloradogundeaths.com"
+WORDPRESS_BLOG_URL = "http://wordpress.coloradogundialog.com"
 
 

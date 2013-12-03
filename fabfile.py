@@ -5,7 +5,7 @@ from fabric.api import *
 from fabric.contrib import django
 
 # names
-env.db_name = "colorado"
+env.db_name = "cogundeaths"
 env.ve_name = "colorado"
 env.repo_name = "colorado"
 env.project_name = "colorado"

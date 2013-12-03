@@ -6,7 +6,7 @@ SETTINGS = os.path.realpath(os.path.dirname(__file__))
 PROJECT_ROOT = os.path.dirname(SETTINGS)
 f = lambda fn: os.path.join(PROJECT_ROOT, fn)
 
-SITE_SLUG = "colorado"
+SITE_SLUG = "cogundeaths"
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
