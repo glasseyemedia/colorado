@@ -215,7 +215,10 @@ class Incident(TimeStampedModel):
         Requires geocoded location.
         """
         if self.point:
-            return Boundary.objects.get(shape__contains=self.point, kind='County')
+            try:
+                return Boundary.objects.get(shape__contains=self.point, kind='County')
+            except Boundary.DoesNotExist:
+                return None
 
     def save(self, *args, **kwargs):
         self.point = self.geocode()
