@@ -163,6 +163,9 @@ def export_victims(queryset):
     # write header
     writer.writeheader()
 
+    # prefetch and select related
+    queryset = queryset.select_related('incident', 'race', 'method')
+
     for victim in queryset:
         row = {}
         for f in fields:
