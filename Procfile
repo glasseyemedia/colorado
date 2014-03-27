@@ -1,1 +1,1 @@
-web: gunicorn colorado.wsgi:application -b 0.0.0.0:$PORT -k gevent -w 9 --max-requests 1499
+web: gunicorn colorado.wsgi:application -b 0.0.0.0:$PORT -k gevent -w 9 --max-requests 601 -t 60
