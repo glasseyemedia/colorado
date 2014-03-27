@@ -172,7 +172,10 @@ def export_victims(queryset):
                 row[f] = unicode(getattr(victim.incident, f, '')).encode('utf-8')
 
             # counties are special
-            row['county'] = victim.incident.get_county()
+            if victim.incident:
+                row['county'] = victim.incident.get_county()
+            else:
+                row['county'] = None
 
         writer.writerow(row)
 
