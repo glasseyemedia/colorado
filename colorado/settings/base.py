@@ -19,7 +19,7 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgis://postgres:geodjango@localhost:5432/%s' % SITE_SLUG)
+        default='postgis://localhost:5432/%s' % SITE_SLUG)
 }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
